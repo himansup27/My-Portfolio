@@ -36,6 +36,8 @@ const SkillSphere = ({ skills }) => {
     scene.add(group);
 
     const RADIUS = 2.1;
+    // tags are drawn bigger on small canvases (phones) so the text stays readable
+    const tagScale = width < 520 ? 1.35 : 1.15;
     const goldenAngle = Math.PI * (3 - Math.sqrt(5));
 
     function roundRect(ctx, x, y, w, h, r) {
@@ -71,7 +73,7 @@ const SkillSphere = ({ skills }) => {
       texture.minFilter = THREE.LinearFilter;
       const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
       const sprite = new THREE.Sprite(material);
-      const scale = 1.15;
+      const scale = tagScale;
       sprite.scale.set(scale, (scale * 96) / 280, 1);
       return sprite;
     }
