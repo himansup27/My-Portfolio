@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import PortfolioV3 from './PortfolioV3/PortfolioV3';
 
