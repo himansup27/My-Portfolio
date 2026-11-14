@@ -622,3 +622,28 @@
   .pv3 .cap-label{ display:none; }
   .pv3 .cap-panel{ padding:24px 22px; }
 }
+
+/* ---- header: download resume button ----
+   Outline pill that borrows the header link's own text color (so it stays
+   readable on both the dark and the light sections) and fills with the
+   cycling accent color on hover, like the other accent elements. */
+.pv3 .header-actions{ display:flex; align-items:center; gap:22px; }
+.pv3 header a.resume-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 16px; border-radius:100px;
+  border:1px solid currentColor;
+  font-size:13px; font-weight:600; letter-spacing:.01em; line-height:1;
+  transition:background .25s ease, border-color .25s ease, color .25s ease, transform .25s ease;
+}
+.pv3 header a.resume-btn svg{ flex:none; transition:transform .25s ease; }
+.pv3 header a.resume-btn:hover,
+.pv3 header a.resume-btn:focus-visible{
+  background:hsl(var(--hue) 78% 62%); border-color:hsl(var(--hue) 78% 62%);
+  color:#141014 !important; opacity:1; transform:translateY(-1px); outline:none;
+}
+.pv3 header a.resume-btn:hover svg,
+.pv3 header a.resume-btn:focus-visible svg{ transform:translateY(2px); }
+@media (max-width:600px){
+  .pv3 .header-actions{ gap:14px; }
+  .pv3 header a.resume-btn{ padding:7px 13px; font-size:12px; }
+}
