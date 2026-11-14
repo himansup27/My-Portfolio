@@ -1,0 +1,20 @@
+/* Header text adapts to the background behind it (see
+   hooks/useBackgroundContrast.js, which adds .on-light when an item is
+   over a light background). Kept in its own file so PortfolioV3.css stays
+   untouched. The dark color matches DARK_TEXT in that hook. */
+
+.pv3 .side-tag,
+.pv3 .logo,
+.pv3 header a {
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.pv3 .logo.on-light,
+.pv3 header a.on-light {
+  color: #151220;
+}
+
+.pv3 .side-tag.on-light {
+  color: rgba(21, 18, 32, 0.6);
+  border-right-color: rgba(21, 18, 32, 0.22);
+}
