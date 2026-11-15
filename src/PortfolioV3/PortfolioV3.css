@@ -647,3 +647,35 @@
   .pv3 .header-actions{ gap:14px; }
   .pv3 header a.resume-btn{ padding:7px 13px; font-size:12px; }
 }
+
+/* ---- closing line: larger on big screens (closing-xl) ----
+   The text is about 11 font-sizes wide, and its box is normally capped by
+   the 1200px content column, which is what held it at 104px. On wide
+   screens the box is allowed to run past the column to the right (up to
+   the page's 5vw side padding), and the font size follows the space that
+   frees up, so it grows with the screen but never gets clipped. Left edge
+   stays aligned with the rest of the content. */
+@media (min-width:1301px){
+  .pv3 .manifest-closing{
+    margin-right:min(0px, calc(5vw - (100vw - 100%) / 2));
+    font-size:min(7.6vw, calc((45vw + 600px) / 11.4), 10rem);
+    padding-bottom:.25em;
+  }
+}
+
+/* ---- hide-scrollbar ----
+   The page still scrolls with wheel, trackpad, touch and keyboard; only
+   the visible bar is hidden. This targets html/body because that is where
+   the page's scrollbar lives, so unlike the rest of this file it is not
+   scoped under .pv3 (it only matters when this page is the whole site). */
+html,
+body {
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* old Edge / IE */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;                  /* Chrome, Safari, new Edge */
+  width: 0;
+  height: 0;
+}
