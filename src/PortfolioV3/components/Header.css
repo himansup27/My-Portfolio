@@ -18,3 +18,99 @@
   color: rgba(21, 18, 32, 0.6);
   border-right-color: rgba(21, 18, 32, 0.22);
 }
+
+/* ==========================================================================
+   Scrolled state: floating frosted-glass pill
+   --------------------------------------------------------------------------
+   At the top of the page the header is transparent, as before. After you
+   scroll (Header.jsx adds .scrolled), it shrinks into a see-through pill:
+   whatever scrolls behind it is blurred and softened, with a thin bright
+   edge and a soft shadow so it reads as a pane of glass. Text keeps using
+   the on-light switching, so it stays readable on every section; and when
+   the pill is over a light section (.over-light) the glass turns light too.
+   ========================================================================== */
+
+/* the header box moves and resizes between the two states */
+.pv3 header {
+  transition: top 0.35s ease, left 0.35s ease, right 0.35s ease, padding 0.35s ease;
+  /* the transparent parts of the header shouldn't block clicks on the
+     page underneath; only the logo and links should take them */
+  pointer-events: none;
+}
+.pv3 header .logo,
+.pv3 header a {
+  pointer-events: auto;
+}
+
+/* the glass is a pseudo-element so it can fade in (backdrop blur and
+   shadows can't be cross-faded on the header itself) */
+.pv3 header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  opacity: 0;
+  transition: opacity 0.35s ease, background 0.35s ease, border-color 0.35s ease,
+    box-shadow 0.35s ease;
+  pointer-events: none;
+}
+
+/* padding of 22px left/right and an inset of (5vw - 22px) keep the logo
+   and the buttons in exactly the same place as before, so nothing jumps
+   sideways when the pill appears */
+.pv3 header.scrolled {
+  top: 12px;
+  left: max(8px, calc(5vw - 22px));
+  right: max(8px, calc(5vw - 22px));
+  padding: 14px 22px;
+}
+.pv3 header.scrolled::before {
+  opacity: 1;
+}
+
+/* over a light section (cream or violet): lighter glass with a dark edge,
+   so the pill is still visible and the dark text has a light surface */
+.pv3 header.scrolled.over-light::before {
+  background: rgba(255, 255, 255, 0.38);
+  border-color: rgba(21, 18, 32, 0.12);
+  box-shadow:
+    0 10px 30px rgba(21, 18, 32, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(21, 18, 32, 0.04);
+}
+
+/* browsers without backdrop-filter get a solid-ish dark pill instead, so
+   the text never ends up on a see-through background it can't read on */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .pv3 header::before {
+    background: rgba(20, 20, 24, 0.9);
+  }
+  .pv3 header.scrolled.over-light::before {
+    background: rgba(244, 242, 236, 0.92);
+  }
+}
+
+@media (max-width: 600px) {
+  .pv3 header.scrolled {
+    top: 8px;
+    left: max(8px, calc(5vw - 16px));
+    right: max(8px, calc(5vw - 16px));
+    padding: 10px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pv3 header,
+  .pv3 header::before {
+    transition: none;
+  }
+}
